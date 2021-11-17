@@ -13,7 +13,6 @@ import groupe3.Javaav.model.viewmodels.CategoryViewModel;
 import java.util.List;
 
 @RestController
-@Controller
 @RequestMapping("/categories")
 public class CategoriesController {
 
@@ -54,5 +53,12 @@ public class CategoriesController {
         model.addAttribute("errorMessage", errorMessage);
         return "category/add";
 
+    }
+    @DeleteMapping("/{id}")
+    public Category delete(@PathVariable(value = "id") Long categoryId){
+        Category category = categoryService.delete(categoryId);
+
+        System.out.println("test id = " + category);
+        return category;
     }
 }
