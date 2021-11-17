@@ -2,6 +2,7 @@ package groupe3.Javaav;
 
 import groupe3.Javaav.dao.CategoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import groupe3.Javaav.model.Category;
 import groupe3.Javaav.model.viewmodels.CategoryViewModel;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -33,25 +35,15 @@ public class CategoriesController {
         return category;
     }
 
-    @RequestMapping(value = { "/categories/add" }, method = RequestMethod.GET)
-    public String add(Model model){
-        model.addAttribute("categoryForm", new CategoryViewModel());
-        return "category/add";
-    }
+    @PostMapping("")
+    public ResponseEntity.BodyBuilder addCategory(@RequestBody Category category){
 
-    @RequestMapping(value = { "/categories/add" }, method = RequestMethod.POST)
-    public String addPost(Model model, @ModelAttribute("categoryForm") CategoryViewModel categoryViewModel){
-
-        if (categoryViewModel.getName() != null && categoryViewModel.getName().length() > 0) {
-            Category c = new Category();
-            c.setName(categoryViewModel.getName());
-            categoryService.add(c);
-
-            return "redirect:/categories";
+        int res = categoryService.add(category);
+        if (res == 1){
+            return ResponseEntity.ok();
+        }else{
+            return ResponseEntity.badRequest();
         }
-        errorMessage = "Nom obligatoire";
-        model.addAttribute("errorMessage", errorMessage);
-        return "category/add";
 
     }
     @DeleteMapping("/{id}")
