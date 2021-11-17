@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import groupe3.Javaav.model.Product;
 import groupe3.Javaav.model.viewmodels.ProductViewModel;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
+@RestController
 @Controller
 public class ProductsController {
 
@@ -21,15 +25,15 @@ public class ProductsController {
     private String errorMessage;
 
     @RequestMapping("/products")
-    public String index(Model model){
+    public List<Product> index(Model model){
         model.addAttribute("listProducts", productService.listAll());
-        return "product/index";
+        return productService.listAll();
     }
 
     @RequestMapping(value = { "/products/add" }, method = RequestMethod.GET)
     public String add(Model model){
         model.addAttribute("productForm", new ProductViewModel());
-        return "product/add";
+        return "";
     }
 
     @RequestMapping(value = { "/products/add" }, method = RequestMethod.POST)
