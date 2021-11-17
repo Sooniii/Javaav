@@ -20,32 +20,32 @@ public class ProductsController {
 
     private String errorMessage;
 
-    @RequestMapping("/users")
+    @RequestMapping("/products")
     public String index(Model model){
         model.addAttribute("listProducts", productService.listAll());
         return "index";
     }
 
-    @RequestMapping(value = { "/users/add" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/products/add" }, method = RequestMethod.GET)
     public String add(Model model){
-        model.addAttribute("userForm", new ProductViewModel());
+        model.addAttribute("productForm", new ProductViewModel());
         return "add";
     }
 
-    @RequestMapping(value = { "/users/add" }, method = RequestMethod.POST)
-    public String addPost(Model model, @ModelAttribute("userForm") ProductViewModel productViewModel){
+    @RequestMapping(value = { "/products/add" }, method = RequestMethod.POST)
+    public String addPost(Model model, @ModelAttribute("productForm") ProductViewModel productViewModel){
 
         if (productViewModel.getName() != null && productViewModel.getName().length() > 0 //
                 && productViewModel.getType() != null &&  productViewModel.getType().length() > 0) {
-            Product u = new Product();
-            u.setName(productViewModel.getName());
-            u.setType(productViewModel.getType());
-            u.setRating(productViewModel.getRating());
-            productService.add(u);
+            Product p = new Product();
+            p.setName(productViewModel.getName());
+            p.setType(productViewModel.getType());
+            p.setRating(productViewModel.getRating());
+            productService.add(p);
 
-            return "redirect:/users";
+            return "redirect:/products";
         }
-        errorMessage = "Nom et prénom obligatoire";
+        errorMessage = "Nom et type obligatoiregi";
         model.addAttribute("errorMessage", errorMessage);
         return "add";
 

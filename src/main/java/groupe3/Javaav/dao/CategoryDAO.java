@@ -9,20 +9,20 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class ProductDAO {
+public class CategoryDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<Product> listAll(){
-        String sql = "SELECT * FROM products";
+    public List<Category> listAll(){
+        String sql = "SELECT * FROM categories";
 
-        List<Product> list = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Product.class));
+        List<Category> list = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Category.class));
 
         return list;
     }
 
-    public int add(Product p) {
-        String sql = "INSERT INTO products (name, type, rating) VALUES (?, ?, ?);";
-        return jdbcTemplate.update(sql, p.getName(), p.getType(), p.getRating());
+    public int add(Category c) {
+        String sql = "INSERT INTO categories (name) VALUES (?);";
+        return jdbcTemplate.update(sql, c.getName());
     }
 }
