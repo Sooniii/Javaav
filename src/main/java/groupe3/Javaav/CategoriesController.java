@@ -22,13 +22,13 @@ public class CategoriesController {
     @RequestMapping("/categories")
     public String index(Model model){
         model.addAttribute("listCategories", categoryService.listAll());
-        return "index";
+        return "category/index";
     }
 
     @RequestMapping(value = { "/categories/add" }, method = RequestMethod.GET)
     public String add(Model model){
         model.addAttribute("categoryForm", new CategoryViewModel());
-        return "add";
+        return "category/add";
     }
 
     @RequestMapping(value = { "/categories/add" }, method = RequestMethod.POST)
@@ -43,7 +43,7 @@ public class CategoriesController {
         }
         errorMessage = "Nom obligatoire";
         model.addAttribute("errorMessage", errorMessage);
-        return "add";
+        return "category/add";
 
     }
 }

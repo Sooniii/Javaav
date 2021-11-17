@@ -23,13 +23,13 @@ public class ProductsController {
     @RequestMapping("/products")
     public String index(Model model){
         model.addAttribute("listProducts", productService.listAll());
-        return "index";
+        return "product/index";
     }
 
     @RequestMapping(value = { "/products/add" }, method = RequestMethod.GET)
     public String add(Model model){
         model.addAttribute("productForm", new ProductViewModel());
-        return "add";
+        return "product/add";
     }
 
     @RequestMapping(value = { "/products/add" }, method = RequestMethod.POST)
@@ -47,7 +47,7 @@ public class ProductsController {
         }
         errorMessage = "Nom et type obligatoiregi";
         model.addAttribute("errorMessage", errorMessage);
-        return "add";
+        return "product/add";
 
 
     }
