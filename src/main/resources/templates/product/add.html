@@ -2,24 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Ajouter un utilisateur</title>
+    <title>Ajouter un produit</title>
 </head>
 <body>
 <h1>Ajouter un user</h1>
-<form th:action="@{/users/add}"
-      th:object="${userForm}" method="POST">
-  Prénom:
-  <input type="text" th:field="*{firstname}" />
+<form th:action="@{/products/add}"
+      th:object="${productsForm}" method="POST">
+  Type:
+  <input type="text" th:field="*{type}" />
   <br/>
-  Nom:
-  <input type="text" th:field="*{lastname}" />
+  Rating:
+  <input type="text" th:field="*{rating}" />
   <br/>
-    Email:
-    <input type="email" th:field="*{email}" />
-    <br/>
-    Téléphone:
-    <input type="text" th:field="*{phone}" />
-    <br/>
+  Name:
+  <input type="email" th:field="*{name}" />
+  <br/>
   <input type="submit" value="Enregistrer" />
 </form>
 
