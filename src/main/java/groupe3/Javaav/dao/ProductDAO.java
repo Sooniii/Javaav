@@ -25,4 +25,6 @@ public class ProductDAO {
         String sql = "INSERT INTO products (name, type, rating) VALUES (?, ?, ?);";
         return jdbcTemplate.update(sql, p.getName(), p.getType(), p.getRating());
     }
+
+
 }

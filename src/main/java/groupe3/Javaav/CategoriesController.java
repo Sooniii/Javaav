@@ -2,16 +2,19 @@ package groupe3.Javaav;
 
 import groupe3.Javaav.dao.CategoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import groupe3.Javaav.model.Category;
 import groupe3.Javaav.model.viewmodels.CategoryViewModel;
 
+import java.util.List;
+
+@RestController
 @Controller
+@RequestMapping("/categories")
 public class CategoriesController {
 
     @Autowired
@@ -19,10 +22,16 @@ public class CategoriesController {
 
     private String errorMessage;
 
-    @RequestMapping("/categories")
-    public String index(Model model){
-        model.addAttribute("listCategories", categoryService.listAll());
-        return "category/index";
+    @GetMapping("")
+    public List<Category> getAll(){
+        return categoryService.listAll();
+    }
+
+    @GetMapping("/{id}")
+    public Category getUsersById(@PathVariable(value = "id") Long categoryId){
+        Category category = categoryService.findById(categoryId);
+        System.out.println(category);
+        return category;
     }
 
     @RequestMapping(value = { "/categories/add" }, method = RequestMethod.GET)

@@ -25,4 +25,11 @@ public class CategoryDAO {
         String sql = "INSERT INTO categories (name) VALUES (?);";
         return jdbcTemplate.update(sql, c.getName());
     }
+
+    public Category findById(Long categoryId){
+        String sql = "SELECT * FROM categories WHERE id=?";
+        Category category = jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Category.class), categoryId);
+
+        return category;
+    }
 }
