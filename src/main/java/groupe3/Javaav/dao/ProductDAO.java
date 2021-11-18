@@ -15,9 +15,7 @@ public class ProductDAO {
 
     public List<Product> listAll(){
         String sql = "SELECT * FROM products";
-
         List<Product> list = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Product.class));
-
         return list;
     }
 
@@ -29,12 +27,10 @@ public class ProductDAO {
     public Product findById(int productId){
         String sql = "SELECT * FROM products WHERE id=?";
         Product product = jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Product.class), productId);
-
     return product;
     }
-    public String delete(Long categoryId){
+    public int delete(Long categoryId){
         String sql = "DELETE FROM products WHERE id=?";
-        jdbcTemplate.update(sql, categoryId);
-        return "DELETE FROM products WHERE id=" + categoryId;
+        return jdbcTemplate.update(sql, categoryId);
     }
 }
