@@ -47,10 +47,8 @@ public class CategoriesController {
 
     }
     @DeleteMapping("/{id}")
-    public Category delete(@PathVariable(value = "id") Long categoryId){
-        Category category = categoryService.delete(categoryId);
-
-        System.out.println("test id = " + category);
+    public String delete(@PathVariable(value = "id") Long categoryId){
+        String category = categoryService.delete(categoryId);
         return category;
     }
 }
