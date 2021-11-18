@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,13 +47,21 @@ public class ProductDAO {
     return products;
     }
 
-    public List<Product> sortByRate(String rates){
+    public List<Product> sortByRate(String rates) {
         List<Product> products = new ArrayList<>();
         String[] rateArray = rates.split(",");
-        for (String rate: rateArray) {
+        for (String rate : rateArray) {
             String sql = "SELECT * FROM products where rating=?";
             products.addAll(jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Product.class), rate));
         }
         return products;
     }
-}
+    public List<Product> sortByDate(String createdAt){
+        List<Product> products = new ArrayList<>();
+        String[] words = createdAt.split(",");
+        for (String type: words) {
+            String sql = "SELECT * FROM products where createdAt=?";
+            products.addAll(jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Product.class), createdAt));
+        }
+        return products;
+    }
