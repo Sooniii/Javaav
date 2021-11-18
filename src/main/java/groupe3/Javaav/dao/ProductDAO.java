@@ -26,5 +26,10 @@ public class ProductDAO {
         return jdbcTemplate.update(sql, p.getName(), p.getType(), p.getRating());
     }
 
+    public String delete(Long categoryId){
+        String sql = "DELETE FROM products WHERE id=?";
+        jdbcTemplate.update(sql, categoryId);
+        return "DELETE FROM products WHERE id=" + categoryId;
+    }
 
 }
