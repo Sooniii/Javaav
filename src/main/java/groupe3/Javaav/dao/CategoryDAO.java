@@ -32,11 +32,9 @@ public class CategoryDAO {
 
         return category;
     }
-
-    public Category delete(Long categoryId) {
+    public int delete(Long categoryId){
         String sql = "DELETE FROM categories WHERE id=?";
-        jdbcTemplate.update(sql, categoryId);
-        return null;
+        return jdbcTemplate.update(sql, categoryId);
     }
 
     public int update(Category c, Long categoryId) {

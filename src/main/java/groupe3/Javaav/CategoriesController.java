@@ -48,11 +48,13 @@ public class CategoriesController {
 
     }
     @DeleteMapping("/{id}")
-    public Category delete(@PathVariable(value = "id") Long categoryId) {
-        Category category = categoryService.delete(categoryId);
-
-        System.out.println("test id = " + category);
-        return category;
+    public HttpStatus delete(@PathVariable(value = "id") Long categoryId){
+        int res = categoryService.delete(categoryId);
+        if (res == 1) {
+            return HttpStatus.OK;
+        } else {
+            return HttpStatus.BAD_REQUEST;
+        }
     }
 
         @PutMapping("/{id}")
