@@ -13,7 +13,7 @@ public class CategoryDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<Category> listAll(){
+    public List<Category> listAll() {
         String sql = "SELECT * FROM categories";
 
         List<Category> list = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Category.class));
@@ -26,15 +26,21 @@ public class CategoryDAO {
         return jdbcTemplate.update(sql, c.getName());
     }
 
-    public Category findById(Long categoryId){
+    public Category findById(Long categoryId) {
         String sql = "SELECT * FROM categories WHERE id=?";
         Category category = jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Category.class), categoryId);
 
         return category;
     }
-    public Category delete(Long categoryId){
+
+    public Category delete(Long categoryId) {
         String sql = "DELETE FROM categories WHERE id=?";
         jdbcTemplate.update(sql, categoryId);
         return null;
+    }
+
+    public int update(Category c, Long categoryId) {
+        String sql = "UPDATE categories SET name=? WHERE id=?";
+        return jdbcTemplate.update(sql, c.getName(), categoryId);
     }
 }

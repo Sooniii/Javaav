@@ -26,5 +26,10 @@ public class ProductDAO {
         return jdbcTemplate.update(sql, p.getName(), p.getType(), p.getRating());
     }
 
+    public Product findById(int productId){
+        String sql = "SELECT * FROM products WHERE id=?";
+        Product product = jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Product.class), productId);
 
+    return product;
+    }
 }
