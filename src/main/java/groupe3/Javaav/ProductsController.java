@@ -56,8 +56,8 @@ public class ProductsController {
         return null;
     }
 
-    @GetMapping("/products/sort")
-    public List<Product> sortByType(@RequestParam String type){
-        return productService.sortByType(type);
+    @GetMapping("/products/sortBy")
+    public List<Product> sortBy(@RequestParam(value = "rate") String firstFilter, @RequestParam(required=false) String secondFilter, @RequestParam(required=false) String thirdFilter){
+        return productService.sortByRate(firstFilter);
     }
 }

@@ -45,4 +45,14 @@ public class ProductDAO {
         }
     return products;
     }
+
+    public List<Product> sortByRate(String rates){
+        List<Product> products = new ArrayList<>();
+        String[] rateArray = rates.split(",");
+        for (String rate: rateArray) {
+            String sql = "SELECT * FROM products where rating=?";
+            products.addAll(jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Product.class), rate));
+        }
+        return products;
+    }
 }
