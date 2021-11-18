@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -32,5 +34,15 @@ public class ProductDAO {
     public int delete(Long categoryId){
         String sql = "DELETE FROM products WHERE id=?";
         return jdbcTemplate.update(sql, categoryId);
+    }
+
+    public List<Product> sortByType(String types){
+        List<Product> products = new ArrayList<>();
+        String[] words = types.split(",");
+        for (String type: words) {
+            String sql = "SELECT * FROM products where type=?";
+            products.addAll(jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Product.class), type));
+        }
+    return products;
     }
 }
