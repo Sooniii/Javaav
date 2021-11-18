@@ -24,10 +24,13 @@ public class ProductsController {
     private String errorMessage;
 
     @GetMapping("")
-    public List<Product> getAll(){
-        return productService.listAll();
+    public List<Product> getPaginatedList(@RequestParam(value = "range", required = false) String range) {
+        if (range == null) {
+            return productService.listAll();
+        } else {
+            return productService.paginatedList(range);
+        }
     }
-
     @PostMapping("")
     public HttpStatus addProduct(@RequestBody Product product){
 

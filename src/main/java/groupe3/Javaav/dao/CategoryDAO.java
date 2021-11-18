@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.net.http.HttpHeaders;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -15,9 +17,17 @@ public class CategoryDAO {
 
     public List<Category> listAll() {
         String sql = "SELECT * FROM categories";
-
         List<Category> list = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Category.class));
 
+        return list;
+    }
+
+    public List<Category> paginatedList(String range) {
+        String[] value = range.split("-");
+        String sql = "SELECT * FROM categories LIMIT ? OFFSET ?";
+        int limit = Integer.parseInt(value[1]);
+        int offset = Integer.parseInt(value[0]);
+        List<Category> list = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Category.class), limit, offset);
         return list;
     }
 

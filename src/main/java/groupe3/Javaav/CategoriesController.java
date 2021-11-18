@@ -25,8 +25,12 @@ public class CategoriesController {
     private String errorMessage;
 
     @GetMapping("")
-    public List<Category> getAll(){
-        return categoryService.listAll();
+    public List<Category> getPaginatedList(@RequestParam(value = "range", required = false) String range) {
+        if (range == null) {
+            return categoryService.listAll();
+        } else {
+            return categoryService.paginatedList(range);
+        }
     }
 
     @GetMapping("/{id}")
