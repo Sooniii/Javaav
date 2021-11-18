@@ -1,8 +1,10 @@
 package groupe3.Javaav;
 
 import groupe3.Javaav.dao.ProductDAO;
+import groupe3.Javaav.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import groupe3.Javaav.model.viewmodels.ProductViewModel;
 import java.util.List;
 
 @RestController
+@RequestMapping("/products")
 public class ProductsController {
 
     @Autowired
@@ -20,43 +23,34 @@ public class ProductsController {
 
     private String errorMessage;
 
-    @RequestMapping("/products")
-    public String index(Model model){
-        model.addAttribute("listProducts", productService.listAll());
-        return "product/index";
+    @GetMapping("")
+    public List<Product> getAll(){
+        return productService.listAll();
     }
 
-    @RequestMapping(value = { "/products/add" }, method = RequestMethod.GET)
-    public String add(Model model){
-        model.addAttribute("productForm", new ProductViewModel());
-        return "add";
-    }
+    @PostMapping("")
+    public HttpStatus addProduct(@RequestBody Product product){
 
-    @RequestMapping(value = { "/products/add" }, method = RequestMethod.POST)
-    public String addPost(Model model, @ModelAttribute("productForm") ProductViewModel productViewModel){
-
-        if (productViewModel.getName() != null && productViewModel.getName().length() > 0 //
-                && productViewModel.getType() != null &&  productViewModel.getType().length() > 0) {
-            Product p = new Product();
-            p.setName(productViewModel.getName());
-            p.setType(productViewModel.getType());
-            p.setRating(productViewModel.getRating());
-            productService.add(p);
-
-            return "redirect:/products";
+        int res = productService.add(product);
+        if (res == 1){
+            return HttpStatus.CREATED;
+        }else{
+            return HttpStatus.BAD_REQUEST;
         }
-        errorMessage = "Nom et type obligatoiregi";
-        model.addAttribute("errorMessage", errorMessage);
-        return "add";
     }
 
-    @RequestMapping(value = { "products/{id]" }, method = RequestMethod.DELETE)
-    public String delete(@PathVariable(value = "id") Long id){
-        System.out.println("test id = " + id);
-        return null;
+
+    @DeleteMapping("/{id}")
+    public HttpStatus delete(@PathVariable(value = "id") Long productId){
+        int res = productService.delete(productId);
+        if (res == 1) {
+            return HttpStatus.OK;
+        } else {
+            return HttpStatus.BAD_REQUEST;
+        }
     }
 
-    @GetMapping("/products/sort")
+    @GetMapping("/sort")
     public List<Product> sortByType(@RequestParam String type){
         return productService.sortByType(type);
     }
