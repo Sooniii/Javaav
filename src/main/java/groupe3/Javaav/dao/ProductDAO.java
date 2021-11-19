@@ -22,6 +22,15 @@ public class ProductDAO {
         return list;
     }
 
+    public List<Product> paginatedList(String range) {
+        String[] value = range.split("-");
+        String sql = "SELECT * FROM products LIMIT ? OFFSET ?";
+        int limit = Integer.parseInt(value[1]);
+        int offset = Integer.parseInt(value[0]);
+        List<Product> list = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Product.class), limit, offset);
+        return list;
+    }
+
     public int add(Product p) {
         String sql = "INSERT INTO products (name, type, rating) VALUES (?, ?, ?);";
         return jdbcTemplate.update(sql, p.getName(), p.getType(), p.getRating());
