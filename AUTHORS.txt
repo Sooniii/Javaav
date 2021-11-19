@@ -1,0 +1,12 @@
+Théodule Janchen
+Kanval Loïc
+Lucas Liger
+Alexis Rabiller
+
+Théo: pagination, CRUD catégories
+
+Loïc: filtrage par date, requêtes avec plusieurs filtres, CRUD products
+
+Lucas: filtrage par rating, filtrage par types, requêtes avec plusieurs filtres, CRUD products
+
+Alexis: fonction delete du CRUD, tri asc ou desc
